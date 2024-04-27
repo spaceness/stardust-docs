@@ -1,0 +1,76 @@
+---
+title: Installing Stardust
+description: Learn how to install Stardust on your machine.
+---
+import {Step, Steps} from "fumadocs-ui/components/steps"
+
+Stardust is simple to setup, even for someone with zero IT knowledge.
+
+Before you get started, make sure that you have the following already set up:
+* A PostgreSQL database. You can use Docker to spin one up by running
+```bash
+docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme -d postgres
+```
+* An Auth0 account. You can sign up for free at [auth0.com](https://auth0.com/). You'll need to get your Issuer, Client ID, and Client Secret.
+* Docker setup (Stardust literally depends on Docker)
+
+## Setup
+<Steps>
+    <Step>
+        First, clone the Stardust repository and install the dependencies.
+        ```bash
+        git clone https://github.com/spaceness/stardust && cd stardust
+        pnpm install
+        ```
+    </Step>
+    <Step>
+        Next, copy the `.env.example` file to `.env` and fill in the necessary details.
+        ```bash
+        cp .env.example .env
+        ```
+    ### General
+    `DATABASE_URL`: the connection string to your PostgreSQL database.
+
+    `DOCKER_PORT_RANGE`: the port range that Stardust will use to create containers.
+
+    `CONTAINER_HOST`: the host that the containers will be created on.
+
+    `NEXTAUTH_URL`: the public URL of your Stardust instance.
+
+    `NEXTAUTH_SECRET`: a random string used to encrypt cookies. You can generate one by running `openssl rand -base64 32`.
+    ### Docker
+    `DOCKER_TYPE`: how you're connecting to docker, either via `socket` or `tcp`.
+
+    `DOCKER_PORT`: the port of your docker instance, this only applies if you're using `tcp`.
+
+    `DOCKER_SOCKET`: the path to your docker socket, this only applies if you're using `socket`.
+    ### Auth0
+    `AUTH0_ISSUER`: the issuer of your Auth0 account.
+
+    `AUTH0_ID`: the client ID of your Auth0 account.
+
+    `AUTH0_SECRET`: the client secret of your Auth0 account.
+    </Step>
+    <Step>
+    Setup the database
+    ```bash
+    pnpm db:push
+    tsx src/lib/drizzle/seed.ts
+    ```
+    </Step>
+    <Step>
+    Build Stardust
+    ```bash
+    pnpm build
+    ```
+    </Step>
+    <Step>
+    Start Stardust
+    ```bash
+    pnpm start
+    ```
+    It is recommended to use a tool like `pm2` to keep Stardust running in the background.
+    Install with `pnpm i -g pm2`, and then run `pm2 start "pnpm start" --name stardust`.
+    Stardust will now be running on port 3000.
+    </Step>
+</Steps>

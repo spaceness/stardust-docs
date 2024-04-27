@@ -4,6 +4,8 @@ import { DocsPage, DocsBody } from "fumadocs-ui/page";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { notFound } from "next/navigation";
 import { ExternalLinkIcon } from "lucide-react";
+import {ImageZoom} from "fumadocs-ui/components/image-zoom";
+import React from "react";
 export default async function Page({
   params,
 }: {
@@ -25,7 +27,7 @@ export default async function Page({
       tableOfContent={{
         footer: (
           <a
-            href={`https://github.com/spaceness/stardust/tree/main/${path}`}
+            href={`https://github.com/spaceness/stardust-docs/tree/main/${path}`}
             target="_blank"
             rel="noreferrer noopener"
             className="inline-flex items-center text-xs text-muted-foreground hover:text-foreground"
@@ -41,7 +43,8 @@ export default async function Page({
           components={{
             Card: (props) => <Card {...props} />,
             Cards: (props) => <Cards {...props} />,
-            // img: (props) => <ImageZoom {...props} />,
+            // @ts-expect-error
+            img: (props) => <ImageZoom {...props} />,
           }}
         />
       </DocsBody>

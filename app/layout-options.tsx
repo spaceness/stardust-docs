@@ -1,5 +1,5 @@
 import { pageTree } from "./source";
-import { type DocsLayoutProps } from "fumadocs-ui/layout";
+import type { DocsLayoutProps } from "fumadocs-ui/layout";
 import { Sparkles } from "lucide-react";
 import Link from "fumadocs-core/link";
 const links = [
