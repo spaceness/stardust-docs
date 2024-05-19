@@ -35,9 +35,9 @@ docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme 
 
     `CONTAINER_HOST`: the host that the containers will be created on.
 
-    `NEXTAUTH_URL`: the public URL of your Stardust instance.
+    `METADATA_URL`: the public URL of your Stardust instance. Use this if you want to display site metadata.
 
-    `NEXTAUTH_SECRET`: a random string used to encrypt cookies. You can generate one by running `openssl rand -base64 32`.
+    `AUTH_SECRET`: a random string used to encrypt cookies. You can generate one by running `openssl rand -base64 32`.
     ### Docker
     `DOCKER_TYPE`: how you're connecting to docker, either via `socket` or `tcp`.
 
@@ -57,6 +57,7 @@ docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme 
     pnpm db:push
     tsx src/lib/drizzle/seed.ts
     ```
+    You can also pull the docker containers at the same time by adding `--pull`.
     </Step>
     <Step>
     Build Stardust
