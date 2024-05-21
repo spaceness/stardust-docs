@@ -31,10 +31,6 @@ docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme 
     ### General
     `DATABASE_URL`: the connection string to your PostgreSQL database.
 
-    `DOCKER_PORT_RANGE`: the port range that Stardust will use to create containers.
-
-    `CONTAINER_HOST`: the host that the containers will be created on.
-
     `METADATA_URL`: the public URL of your Stardust instance. Use this if you want to display site metadata.
 
     `AUTH_SECRET`: a random string used to encrypt cookies. You can generate one by running `openssl rand -base64 32`.
