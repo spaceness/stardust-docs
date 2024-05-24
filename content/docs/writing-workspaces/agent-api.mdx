@@ -35,8 +35,8 @@ This endpoint returns a list of files in the container's `~/Downloads` directory
 ### `GET /files/download/:name`
 This endpoint returns the file in the container's `~/Downloads` directory with the name `:name`.
 
-### `PUT /files/upload`
-This endpoint uploads a file to the container's `~/Uploads` directory. The file should be sent as a `NodeJS.Buffer` in the body of the request.
+### `PUT /files/upload/:name`
+This endpoint uploads a file to the container's `~/Uploads` directory with the name `:name`. The file should be sent as a `NodeJS.Buffer` in the body of the request.
 ```ts
 await fetch(`http://${ip}:6080/files/upload/${fileName}`, {
 		method: "PUT",
