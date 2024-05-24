@@ -1,0 +1,30 @@
+---
+title: Writing your own Workspaces
+description: Learn how to write your own Stardust workspaces.
+---
+
+Stardust workspaces are, at the core, a Docker container. They have a desktop environment installed, coupled with a VNC server and the Stardust Container Agent.
+
+## Agent
+
+Stardust's container agent is an HTTP server running on any Stardust container on port 6080. It's source code can be found on  [GitHub](https://github.com/spaceness/stardust-images/tree/main/server). The agent is currently used for file transfer, grabbing a screenshot for image previews, and for getting the container's VNC token. The agent should be able to write to the `stardust` user's home directory, and the temp directory.
+The stock agent is written in TypeScript and uses [Fastify](https://fastify.dev/). More details can be found [here](/docs/writing-workspaces/agent-api).
+
+## VNC
+Stardust expects a VNC server running on port 5900. It is expected to only accept a password for auth, and said password should be exported as an environment variable, so that the container agent can access it. The server should also have remote resizing enabled, so that the container agent can resize the VNC window to fit the user's screen.
+
+### Password
+There are many ways to share the VNC password with the agent. The stock images export an environment variable that's a random string, and then `vncpasswd` is used to set the password.
+
+```bash title="Example start script for a container" icon="bash"
+#!/bin/bash
+export VNCPASSWORD=$(openssl rand -base64 32)
+echo $VNCPASSWORD | vncpasswd -f > /home/stardust/.vnc/passwd
+vncserver -kill :1
+vncserver :1 -passwd /home/stardust/.vnc/passwd -fg -localhost no
+# Start the agent
+tsx server/index.ts
+```
+
+## System
+The container should have a user named `stardust`, and it's home directory must also be able to be written to by the container agent. There should be a `~/Downloads` and a `~/Uploads` directory, which the container agent can use to transfer files to and from the container.
