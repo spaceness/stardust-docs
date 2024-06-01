@@ -66,7 +66,7 @@ docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme 
     ```bash
     pnpm start
     ```
-    It is recommended to use a tool like `pm2` to keep Stardust running in the background.
+    It is recommended to use a tool like `pm2` or `systemd` to keep Stardust running in the background.
     Install with `pnpm i -g pm2`, and then run `pm2 start "pnpm start" --name stardust`.
     Stardust will now be running on port 3000.
     </Step>

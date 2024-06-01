@@ -1,6 +1,6 @@
 import "./global.css";
 import { RootProvider } from "fumadocs-ui/provider";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
 
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   metadataBase:
     process.env.NODE_ENV === "development"
       ? new URL(process.env.LOCAL_URL ?? "http://localhost:3000")
-      : new URL(`https://stardust.spaceness.one`),
+      : new URL("https://stardust.spaceness.one"),
 };
 export default function Layout({ children }: { children: ReactNode }) {
   return (
