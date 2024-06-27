@@ -11,7 +11,7 @@ Before you get started, make sure that you have the following already set up:
 ```bash
 docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme -d postgres
 ```
-* An Auth0 account. You can sign up for free at [auth0.com](https://auth0.com/). You'll need to get your Issuer, Client ID, and Client Secret.
+* An Auth0, Discord, or GitHub application.
 * Docker setup (Stardust literally depends on Docker)
 
 ## Setup
@@ -35,17 +35,27 @@ docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme 
 
     `AUTH_SECRET`: a random string used to encrypt cookies. You can generate one by running `openssl rand -base64 32`.
     ### Docker
-    `DOCKER_TYPE`: how you're connecting to docker, either via `socket` or `tcp`.
+    `DOCKER_TYPE`: how you're connecting to docker, either via `socket` or `tcp`, defaults to `socket`.
 
     `DOCKER_PORT`: the port of your docker instance, this only applies if you're using `tcp`.
 
-    `DOCKER_SOCKET`: the path to your docker socket, this only applies if you're using `socket`.
-    ### Auth0
-    `AUTH0_ISSUER`: the issuer of your Auth0 account.
+    `CONTAINER_HOST`: the host of your docker instance, this only applies if you're using `tcp`.
 
-    `AUTH0_ID`: the client ID of your Auth0 account.
+    `DOCKER_SOCKET`: the path to your docker socket, this only applies if you're using `socket`, defaults to `/var/run/docker.sock`.
+    ### Auth
+    Auth0, Discord, and GitHub are currently supported.
+    Format is:
+    ```
+    AUTH_[provider in all caps]_[key]
+    ```
+    Keys are `ID`, `SECRET`, and `ISSUER`.
+    ```sh title="Example .env"
+    AUTH_AUTH0_ID=your-auth0-id
+    AUTH_AUTH0_SECRET=your-auth0-secret
+    AUTH_AUTH0_ISSUER=your-auth0-issuer
+    ```
+    `AUTH_PROVIDERS`: a comma-separated list of the providers you want to enable. Example: `AUTH_PROVIDERS=auth0,github,discord`.
 
-    `AUTH0_SECRET`: the client secret of your Auth0 account.
     </Step>
     <Step>
     Setup the database
