@@ -11,20 +11,32 @@ Before you get started, make sure that you have the following already set up:
 ```bash
 docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme -d postgres
 ```
-* An Auth0, Discord, or GitHub application.
+* An Auth0, Discord, GitHub, Google, Okta, Apple, and/or GitLab OAuth application.
 * Docker setup (Stardust literally depends on Docker)
 
 ## Setup
 <Steps>
     <Step>
-        First, clone the Stardust repository and install the dependencies.
+      Create a new docker network
+      ```bash
+      docker network create stardust
+      ```
+    </Step>
+    <Step>
+    Block all container-to-container traffic (you need jq)
+    ```bash
+    iptables -I FORWARD -s $(docker network inspect stardust | jq -r 'map(to_entries) | map ([.[6].value.Config[0].Subnet ]) | .[] | @tsv') -d $(docker network inspect stardust | jq -r 'map(to_entries) | map ([.[6].value.Config[0].Subnet ]) | .[] | @tsv') -j DROP
+    ```
+    </Step>
+    <Step>
+        Clone the Stardust repository and install the dependencies.
         ```bash
         git clone https://github.com/spaceness/stardust && cd stardust
         pnpm install
         ```
     </Step>
     <Step>
-        Next, copy the `.env.example` file to `.env` and fill in the necessary details.
+       Copy the `.env.example` file to `.env` and fill in the necessary details.
         ```bash
         cp .env.example .env
         ```
@@ -43,12 +55,17 @@ docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme 
 
     `DOCKER_SOCKET`: the path to your docker socket, this only applies if you're using `socket`, defaults to `/var/run/docker.sock`.
     ### Auth
-    Auth0, Discord, and GitHub are currently supported.
-    Format is:
+   Make sure the redirect URIs in your OAuth applications are set to `<proto>://<domain>/api/auth/callback/[provider]`.
+
+   Also, make sure the scopes are set to allow read access to email and profile information.
+
+    ENV format is:
     ```
     AUTH_[provider in all caps]_[key]
     ```
     Keys are `ID`, `SECRET`, and `ISSUER`.
+
+
     ```sh title="Example .env"
     AUTH_AUTH0_ID=your-auth0-id
     AUTH_AUTH0_SECRET=your-auth0-secret
