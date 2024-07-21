@@ -1,0 +1,25 @@
+name: Update config types
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  update:
+
+    runs-on: ubuntu-latest
+    permissions:                # Job-level permissions configuration starts here
+        contents: write           # 'write' access to repository contents
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Pull the repository and update the config types
+      run: apt install curl; echo $(curl https://raw.githubusercontent.com/spaceness/stardust/main/src/types/config.d.ts) > stardust-config.d.ts
+    - name: Push changes
+      uses: stefanzweifel/git-auto-commit-action@v4
+      if: ${{ github.repository == 'spaceness/stardust-docs' && github.ref == 'refs/heads/main' }}
+      with:
+        commit_message: "chore: re-generate README sections"
+        commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+        branch: ${{ github.head_ref }}

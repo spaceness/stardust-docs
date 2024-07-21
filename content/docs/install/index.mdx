@@ -3,16 +3,22 @@ title: Installing Stardust
 description: Learn how to install Stardust on your machine.
 ---
 import {Step, Steps} from "fumadocs-ui/components/steps"
+import { AutoTypeTable } from 'fumadocs-typescript/ui';
 
 Stardust is simple to setup, even for someone with zero IT knowledge.
 
 Before you get started, make sure that you have the following already set up:
+* Node.js 18 or later installed, plus `node-gyp` and `pnpm`. Download Node.js from [Nodesource](https://github.com/nodesource/distributions) and `node-gyp` and `pnpm` by running the following:
+```bash
+# or however else you install make and gcc
+sudo apt install build-essential gcc
+npm i -g pnpm node-gyp
+```
+* Docker setup. If you're using a Unix-based system, you can follow the instructions [here](https://docs.docker.com/engine/install/ubuntu/).
 * A PostgreSQL database. You can use Docker to spin one up by running
 ```bash
 docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme -d postgres
 ```
-* An Auth0, Discord, GitHub, Google, Okta, Apple, and/or GitLab OAuth application.
-* Docker setup (Stardust literally depends on Docker)
 
 ## Setup
 <Steps>
@@ -25,7 +31,8 @@ docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme 
     <Step>
     Block all container-to-container traffic (you need jq)
     ```bash
-    iptables -I FORWARD -s $(docker network inspect stardust | jq -r 'map(to_entries) | map ([.[6].value.Config[0].Subnet ]) | .[] | @tsv') -d $(docker network inspect stardust | jq -r 'map(to_entries) | map ([.[6].value.Config[0].Subnet ]) | .[] | @tsv') -j DROP
+    export DOCKER_NETWORK_SUBNET=$(docker network inspect stardust | jq -r 'map(to_entries) | map ([.[6].value.Config[0].Subnet ]) | .[] | @tsv')
+    iptables -I FORWARD -s $DOCKER_NETWORK_SUBNET -d $DOCKER_NETWORK_SUBNET -j DROP
     ```
     </Step>
     <Step>
@@ -36,43 +43,21 @@ docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme 
         ```
     </Step>
     <Step>
-       Copy the `.env.example` file to `.env` and fill in the necessary details.
-        ```bash
-        cp .env.example .env
+      Make a new file in `.config/config.json` and first, fill it with the following:
+        ```json
+        {
+          "$schema": "config-schema.json",
+        }
         ```
+    and then the respective fields.
     ### General
-    `DATABASE_URL`: the connection string to your PostgreSQL database.
-
-    `METADATA_URL`: the public URL of your Stardust instance. Use this if you want to display site metadata.
-
-    `AUTH_SECRET`: a random string used to encrypt cookies. You can generate one by running `openssl rand -base64 32`.
-    ### Docker
-    `DOCKER_TYPE`: how you're connecting to docker, either via `socket` or `tcp`, defaults to `socket`.
-
-    `DOCKER_PORT`: the port of your docker instance, this only applies if you're using `tcp`.
-
-    `CONTAINER_HOST`: the host of your docker instance, this only applies if you're using `tcp`.
-
-    `DOCKER_SOCKET`: the path to your docker socket, this only applies if you're using `socket`, defaults to `/var/run/docker.sock`.
-    ### Auth
-   Make sure the redirect URIs in your OAuth applications are set to `<proto>://<domain>/api/auth/callback/[provider]`.
-
-   Also, make sure the scopes are set to allow read access to email and profile information.
-
-    ENV format is:
-    ```
-    AUTH_[provider in all caps]_[key]
-    ```
-    Keys are `ID`, `SECRET`, and `ISSUER`.
-
-
-    ```sh title="Example .env"
-    AUTH_AUTH0_ID=your-auth0-id
-    AUTH_AUTH0_SECRET=your-auth0-secret
-    AUTH_AUTH0_ISSUER=your-auth0-issuer
-    ```
-    `AUTH_PROVIDERS`: a comma-separated list of the providers you want to enable. Example: `AUTH_PROVIDERS=auth0,github,discord`.
-
+   <AutoTypeTable path="./stardust-config.d.ts" name="Config" />
+   ### Session (`SessionConfig`)
+   <AutoTypeTable path="./stardust-config.d.ts" name="SessionConfig" />
+  ### Docker (`DockerConfig`)
+    <AutoTypeTable path="./stardust-config.d.ts" name="DockerConfig" />
+   ### Auth (`AuthConfig`)
+    <AutoTypeTable path="./stardust-config.d.ts" name="AuthConfig" />
     </Step>
     <Step>
     Setup the database
