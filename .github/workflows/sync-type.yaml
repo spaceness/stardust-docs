@@ -18,7 +18,7 @@ jobs:
       - name: Update config types
         run: |
           rm -f stardust-config.d.ts;
-          echo $(curl https://raw.githubusercontent.com/spaceness/stardust/main/src/types/config.d.ts) > stardust-config.d.ts;
+          curl https://raw.githubusercontent.com/spaceness/stardust/main/src/types/config.d.ts -o stardust-config.d.ts;
           git add .;
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
