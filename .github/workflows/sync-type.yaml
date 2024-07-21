@@ -15,7 +15,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Pull the repository and update the config types
-      run: echo $(curl https://raw.githubusercontent.com/spaceness/stardust/main/src/types/config.d.ts) > stardust-config.d.ts
+      run: |
+        echo $(curl https://raw.githubusercontent.com/spaceness/stardust/main/src/types/config.d.ts) > stardust-config.d.ts
     - name: Push changes
       uses: stefanzweifel/git-auto-commit-action@v4
       if: ${{ github.repository == 'spaceness/stardust-docs' && github.ref == 'refs/heads/main' }}
