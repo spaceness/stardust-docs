@@ -20,6 +20,6 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4
       if: ${{ github.repository == 'spaceness/stardust-docs' && github.ref == 'refs/heads/main' }}
       with:
-        commit_message: "chore: re-generate README sections"
+        commit_message: "chore: sync config type"
         commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
         branch: ${{ github.head_ref }}
