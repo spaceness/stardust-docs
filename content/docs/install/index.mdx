@@ -63,7 +63,7 @@ docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme 
     Setup the database
     ```bash
     pnpm db:push
-    tsx src/lib/drizzle/seed.ts
+    CONFIG=$(cat .config/config.json) tsx src/lib/drizzle/seed.ts
     ```
     You can also pull the docker containers at the same time by adding `--pull`.
     </Step>
