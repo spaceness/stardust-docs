@@ -45,12 +45,9 @@ export interface AuthConfig {
 	/**
 	 * Cloudflare turnstile configuration. Leave `undefined` to disable turnstile.
 	 **/
-	turnstile?: {
-		secret: string;
-		siteKey: string;
-	};
+	turnstile?: TurnstileConfig;
 	/**
-	 * Credentials configuration. Leave `undefined` to disable user/password signups.
+	 * Credentials configuration. Leave `undefined` to disable user/password signups, or as `{}` to enable.
 	 **/
 	credentials?: {
 		/**
@@ -94,4 +91,19 @@ export interface SessionConfig {
 	 * @default 1440
 	 */
 	keepaliveDuration?: number;
+}
+
+export interface TurnstileConfig {
+	/*
+	 * The Turnstile secret key, used by the backend
+	 */
+	secret: string;
+	/*
+	 * The Turnstile site key, used by the frontend
+	 */
+	siteKey: string;
+	/*
+	 * The hosts to enable Turnstile on
+	 */
+	hosts?: string[];
 }
