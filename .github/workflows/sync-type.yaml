@@ -29,5 +29,6 @@ jobs:
         if: ${{ github.repository == 'spaceness/stardust-docs' && github.ref == 'refs/heads/main' }}
         with:
           commit_message: "chore: sync config type"
+          commit_options: "--allow-empty"
           commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
           branch: ${{ github.head_ref }}
