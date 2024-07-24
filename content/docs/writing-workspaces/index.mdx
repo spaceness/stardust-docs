@@ -11,7 +11,7 @@ Stardust's container agent is an HTTP server running on any Stardust container o
 The stock agent is written in TypeScript and uses [Fastify](https://fastify.dev/). More details can be found [here](/docs/writing-workspaces/agent-api).
 
 ## VNC
-Stardust expects a VNC server running on port 5900. It is expected to only accept a password for auth, and said password should be exported as an environment variable, so that the container agent can access it. The server should also have remote resizing enabled, so that the container agent can resize the VNC window to fit the user's screen.
+Stardust expects a VNC server running on port 5900. It is expected to only accept a password for auth, and said password should be exported as an environment variable, so that the container agent can access it. The server should also have remote resizing enabled, unless it's not suited for the use case.
 
 ### Password
 There are many ways to share the VNC password with the agent. The stock images export an environment variable that's a random string, and then `vncpasswd` is used to set the password.
