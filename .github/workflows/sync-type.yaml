@@ -3,6 +3,8 @@ name: Update config types
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
 
