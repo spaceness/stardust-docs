@@ -94,15 +94,15 @@ export interface SessionConfig {
 }
 
 export interface TurnstileConfig {
-	/*
+	/**
 	 * The Turnstile secret key, used by the backend
 	 */
 	secret: string;
-	/*
+	/**
 	 * The Turnstile site key, used by the frontend
 	 */
 	siteKey: string;
-	/*
+	/**
 	 * The hosts to enable Turnstile on
 	 */
 	hosts?: string[];
