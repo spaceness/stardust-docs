@@ -9,12 +9,10 @@ on:
       - main
 
 jobs:
-
   update:
-
     runs-on: ubuntu-latest
-    permissions:                # Job-level permissions configuration starts here
-        contents: write           # 'write' access to repository contents
+    permissions: # Job-level permissions configuration starts here
+      contents: write # 'write' access to repository contents
 
     steps:
       - name: Checkout

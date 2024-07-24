@@ -2,25 +2,31 @@
 title: Installing Stardust
 description: Learn how to install Stardust on your machine.
 ---
-import {Step, Steps} from "fumadocs-ui/components/steps"
-import { AutoTypeTable } from 'fumadocs-typescript/ui';
+
+import { Step, Steps } from "fumadocs-ui/components/steps";
+import { AutoTypeTable } from "fumadocs-typescript/ui";
 
 Stardust is simple to setup, even for someone with zero IT knowledge.
 
 Before you get started, make sure that you have the following already set up:
-* Node.js 18 or later installed, plus `node-gyp` and `pnpm`. Download Node.js from [Nodesource](https://github.com/nodesource/distributions) and `node-gyp` and `pnpm` by running the following:
+
+- Node.js 18 or later installed, plus `node-gyp` and `pnpm`. Download Node.js from [Nodesource](https://github.com/nodesource/distributions) and `node-gyp` and `pnpm` by running the following:
+
 ```bash
 # or however else you install make and gcc
 sudo apt install build-essential gcc
 npm i -g pnpm node-gyp
 ```
-* Docker setup. If you're using a Unix-based system, you can follow the instructions [here](https://docs.docker.com/engine/install/ubuntu/).
-* A PostgreSQL database. You can use Docker to spin one up by running
+
+- Docker setup. If you're using a Unix-based system, you can follow the instructions [here](https://docs.docker.com/engine/install/ubuntu/).
+- A PostgreSQL database. You can use Docker to spin one up by running
+
 ```bash
 docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme -d postgres
 ```
 
 ## Setup
+
 <Steps>
     <Step>
       Create a new docker network
