@@ -91,6 +91,18 @@ export interface SessionConfig {
 	 * @default 1440
 	 */
 	keepaliveDuration?: number;
+	/**
+	 * Dns servers for the container to use
+	 * @default system default
+	 */
+	dnsServers?: string[];
+	/**
+	 * Session per user usage limit configuration
+	 */
+	usageLimits?: {
+		instance?: number;
+		user?: number;
+	};
 }
 
 export interface TurnstileConfig {
@@ -102,8 +114,4 @@ export interface TurnstileConfig {
 	 * The Turnstile site key, used by the frontend
 	 */
 	siteKey: string;
-	/**
-	 * The hosts to enable Turnstile on
-	 */
-	hosts?: string[];
 }
