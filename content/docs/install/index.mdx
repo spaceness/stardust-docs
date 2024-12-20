@@ -29,17 +29,10 @@ docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme 
 
 <Steps>
     <Step>
-      Create a new docker network
+      Create a new docker network with ICC disabled
       ```bash
-      docker network create stardust
+      docker network create  --opt "com.docker.network.bridge.enable_icc"="false" stardust
       ```
-    </Step>
-    <Step>
-    Block all container-to-container traffic (you need jq)
-    ```bash
-    export DOCKER_NETWORK_SUBNET=$(docker network inspect stardust | jq -r 'map(to_entries) | map ([.[6].value.Config[0].Subnet ]) | .[] | @tsv')
-    iptables -I FORWARD -s $DOCKER_NETWORK_SUBNET -d $DOCKER_NETWORK_SUBNET -j DROP
-    ```
     </Step>
     <Step>
         Clone the Stardust repository and install the dependencies.
