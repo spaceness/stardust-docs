@@ -1,10 +1,6 @@
-import createMDX from "fumadocs-mdx/config";
+import { createMDX } from "fumadocs-mdx/next";
 
-const withMDX = createMDX({
-	mdxOptions: {
-		lastModifiedTime: "git",
-	},
-});
+const withMDX = createMDX();
 
 /** @type {import('next').NextConfig} */
 const config = {

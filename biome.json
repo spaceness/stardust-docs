@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
 	"formatter": {
 		"enabled": true,
 		"formatWithErrors": true,
@@ -8,18 +8,18 @@
 		"lineEnding": "lf",
 		"lineWidth": 120,
 		"attributePosition": "auto",
-		"ignore": ["**/pnpm-lock.yaml", "**/.next/**", "**/node_modules/**"]
+		"ignore": ["**/pnpm-lock.yaml", "**/.next/**", "**/node_modules/**", "**/.source/**"]
 	},
 	"organizeImports": {
 		"enabled": true,
-		"ignore": ["**/pnpm-lock.yaml", "**/.next/**", "**/node_modules/**"]
+		"ignore": ["**/pnpm-lock.yaml", "**/.next/**", "**/node_modules/**", "**/.source/**"]
 	},
 	"linter": {
 		"enabled": true,
 		"rules": {
 			"recommended": true
 		},
-		"ignore": ["**/pnpm-lock.yaml", "**/.next/**", "**/node_modules/**"]
+		"ignore": ["**/pnpm-lock.yaml", "**/.next/**", "**/node_modules/**", "**/.source/**"]
 	},
 	"javascript": {
 		"formatter": {

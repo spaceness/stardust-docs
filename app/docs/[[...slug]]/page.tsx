@@ -1,40 +1,35 @@
 import { getPage, getPages } from "@/app/source";
 import { Card, Cards } from "fumadocs-ui/components/card";
+import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
+import { Step, Steps } from "fumadocs-ui/components/steps";
 import { DocsBody, DocsPage } from "fumadocs-ui/page";
-import { ExternalLinkIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import React from "react";
-export default async function Page({
-	params,
-}: {
-	params: { slug?: string[] };
+export default async function Page(props: {
+	params: Promise<{ slug?: string[] }>;
 }) {
+	const params = await props.params;
 	const page = getPage(params.slug);
 
-	if (page == null) {
-		notFound();
-	}
+	if (!page) notFound();
 
-	const MDX = page.data.exports.default;
+	const { body: MDX, toc, lastModified } = page.data;
 	const path = `content/docs/${page.file.path}`;
 
 	return (
 		<DocsPage
-			toc={page.data.exports.toc}
-			lastUpdate={page.data.exports.lastModified}
+			toc={toc}
+			lastUpdate={lastModified}
+			editOnGithub={{
+				repo: "stardust-docs",
+				owner: "spaceness",
+				sha: "main",
+				path,
+			}}
 			tableOfContent={{
-				footer: (
-					<a
-						href={`https://github.com/spaceness/stardust-docs/tree/main/${path}`}
-						target="_blank"
-						rel="noreferrer noopener"
-						className="inline-flex items-center text-xs text-muted-foreground hover:text-foreground"
-					>
-						Edit on GitHub <ExternalLinkIcon className="ml-1 size-3" />
-					</a>
-				),
+				style: "clerk",
 			}}
 		>
 			<DocsBody>
@@ -43,8 +38,14 @@ export default async function Page({
 					components={{
 						Card: (props) => <Card {...props} />,
 						Cards: (props) => <Cards {...props} />,
-						// @ts-expect-error
+						Step: (props) => <Step {...props} />,
+						Steps: (props) => <Steps {...props} />,
 						img: (props) => <ImageZoom {...props} />,
+						pre: ({ ref: _ref, ...props }) => (
+							<CodeBlock {...props}>
+								<Pre>{props.children}</Pre>
+							</CodeBlock>
+						),
 					}}
 				/>
 			</DocsBody>
@@ -58,7 +59,8 @@ export async function generateStaticParams() {
 	}));
 }
 
-export function generateMetadata({ params }: { params: { slug?: string[] } }) {
+export async function generateMetadata(props: { params: Promise<{ slug?: string[] }> }) {
+	const params = await props.params;
 	const page = getPage(params.slug);
 
 	if (page == null) notFound();

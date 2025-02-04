@@ -1,86 +1,50 @@
 ---
-title: Installing Stardust
+title: Installation
 description: Learn how to install Stardust on your machine.
 ---
 
-import { Step, Steps } from "fumadocs-ui/components/steps";
-import { AutoTypeTable } from "fumadocs-typescript/ui";
+Stardust is composed of 2 components:
 
-Stardust is simple to setup, even for someone with zero IT knowledge.
+- Web: The Stardust UI and backend server. This is the main interface for interacting with Stardust.
+- Daemon (`stardustd`): Runs on each individual Stardust node. It is responsible for managing the sessions and workspaces.
 
-Before you get started, make sure that you have the following already set up:
+# Before Starting
 
-- Node.js 18 or later installed, plus `node-gyp` and `pnpm`. Download Node.js from [Nodesource](https://github.com/nodesource/distributions) and `node-gyp` and `pnpm` by running the following:
-
-```bash
-# or however else you install make and gcc
-sudo apt install build-essential gcc
-npm i -g pnpm node-gyp
-```
-
-- Docker setup. If you're using a Unix-based system, you can follow the instructions [here](https://docs.docker.com/engine/install/ubuntu/).
-- A PostgreSQL database. You can use Docker to spin one up by running
-
-```bash
-docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme -d postgres
-```
-
-## Setup
+These steps apply to both the Web and Daemon components.
 
 <Steps>
-    <Step>
-      Create a new docker network with ICC disabled
-      ```bash
-      docker network create  --opt "com.docker.network.bridge.enable_icc"="false" stardust
-      ```
-    </Step>
-    <Step>
-        Clone the Stardust repository and install the dependencies.
-        ```bash
-        git clone https://github.com/spaceness/stardust -b v0.9 && cd stardust
-        pnpm install
-        ```
-    </Step>
-    <Step>
-      Make a new file in `.config/config.json` and first, fill it with the following:
-        ```json
-        {
-          "$schema": "config-schema.json",
-        }
-        ```
-    and then the respective fields.
-    ### General
-   <AutoTypeTable path="./stardust-config.d.ts" name="Config" />
-   ### Session (`SessionConfig`)
-   <AutoTypeTable path="./stardust-config.d.ts" name="SessionConfig" />
-  ### Docker (`DockerConfig`)
-    <AutoTypeTable path="./stardust-config.d.ts" name="DockerConfig" />
-   ### Auth (`AuthConfig`)
-    <AutoTypeTable path="./stardust-config.d.ts" name="AuthConfig" />
-  #### `TurnstileConfig`
-    <AutoTypeTable path="./stardust-config.d.ts" name="TurnstileConfig" />
-    </Step>
-    <Step>
-    Setup the database
+  <Step>
+    Make sure you have [Node.js](https://nodejs.org/en/download) and
+    [pnpm](https://pnpm.io/installation) installed on your machine.
     ```bash
-    pnpm db:push
-    CONFIG=$(cat .config/config.json) tsx src/lib/drizzle/seed.ts
+    node -v
+    pnpm -v # install with `npm install -g pnpm`
     ```
-    You can also pull the docker containers at the same time by adding `--pull`.
-    </Step>
-    <Step>
-    Build Stardust
+  </Step>
+  <Step>
+    Clone the Stardust repository and install the dependencies.
+
     ```bash
-    pnpm build
+    git clone https://github.com/spaceness/stardust -b rewrite && cd stardust
+    pnpm install
     ```
-    </Step>
-    <Step>
-    Start Stardust
-    ```bash
-    pnpm start
-    ```
-    It is recommended to use a tool like `pm2` or `systemd` to keep Stardust running in the background.
-    Install with `pnpm i -g pm2`, and then run `pm2 start "pnpm start" --name stardust`.
-    Stardust will now be running on port 3000.
-    </Step>
+
+  </Step>
+  <Step>
+      Follow the instructions for the component you want to install.
+      <Cards>
+        <Card
+          href="web"
+          title="Web"
+          description="The Stardust UI and server - Works on most machines with Node.js"
+          external={false}
+        />
+        <Card
+          href="daemon"
+          title="Daemon"
+          description="The Stardust Daemon - Runs on each Stardust node"
+          external={false}
+        />
+      </Cards>
+  </Step>
 </Steps>
