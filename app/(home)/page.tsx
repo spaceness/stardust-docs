@@ -1,15 +1,15 @@
+import stardustHome from "@/app/_images/home.png";
+import stardustView from "@/app/_images/view.png";
 import { buttonVariants } from "@/components/ui/button";
 import { Card } from "fumadocs-ui/components/card";
 import { Airplay, Lock, MonitorSmartphone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import stardustHome from "@/app/_images/home.png";
-import stardustView from "@/app/_images/view.png";
 export default function HomePage() {
 	return (
 		<main className="h-full mt-8">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-				<div className="space-y-8 flex gap-2">
+				<div className="space-y-8 flex gap-8">
 					<div className="flex flex-col gap-4">
 						<h1 className="text-6xl font-extrabold tracking-tight leading-tight">
 							Stream containers
@@ -29,7 +29,7 @@ export default function HomePage() {
 							</Link>
 						</div>
 					</div>
-					<div className="relative px-2 size-1/2">
+					<div className="relative size-1/2">
 						<Image
 							src={stardustHome}
 							alt="Stardust workspaces dashboard screenshot"
