@@ -3,9 +3,70 @@ title: Daemon
 description: Installing Stardust Daemon on your machine.
 ---
 
+import { DaemonTypes } from "@/components/daemon-types";
+
 ## Prerequisites
 
 Before you begin the installation process, ensure that your system meets the following requirements:
 
 - Operating System: Linux or macOS. Windows is not supported.
 - IP Connection to the Stardust Web server.
+- A working docker installation - Daemon interface must be exposed via socket or TCP.
+
+## Installation
+
+<Steps>
+    <Step>
+    ### Setup
+        Install [Bun](https://bun.sh/docs/installation).
+
+        ```bash
+        curl -fsSL https://bun.sh/install | bash
+        bun -v
+        ```
+    </Step>
+    <Step>
+    ### Build
+    Build the Stardust daemon.
+
+    ```bash
+    cd apps/daemon
+    pnpm build
+    ```
+    </Step>
+    <Step>
+    ### Link
+    Symlink the built binary to your path.
+
+    ```bash
+    ln -s $(pwd)/stardustd /usr/local/bin/stardustd
+    ```
+    </Step>
+    <Step>
+    ### Config file
+    Create the daemon configuration file.
+
+    ```yaml title="~/.config/stardustd/config.yaml"
+    docker:
+      network: stardust
+      socket: /var/run/docker.sock
+    session: {}
+    # yaml-language-server: $schema=/opt/stardust/apps/daemon/schema.json
+    ```
+    </Step>
+    <Step>
+    ### Configure
+
+    <DaemonTypes />
+    </Step>
+      <Step>
+      ### Start
+
+      ```bash
+      stardustd
+      ```
+
+      On first start, the app will be automatically daemonized if specified in the config. It will generate and log the token used to authenticate by Stardust Web.
+
+  </Step>
+</Steps>

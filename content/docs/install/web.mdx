@@ -3,4 +3,105 @@ title: Web
 description: Instaling Stardust Web on your machine.
 ---
 
-...to be filled one day
+import { WebTypes } from "@/components/web-types";
+
+## Prerequisites
+
+Before you begin the installation process, ensure that your system meets the following requirements:
+
+- Operating System: Anything that supports Node.js >=20
+- IP Connection to the `stardustd` nodes.
+- A way to expose an HTTP server to the internet. This can be done with a reverse proxy like Nginx or Caddy, or just directly.
+- A PostgreSQL database. You can use docker to set one up by running:
+  ```bash
+  docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=replaceme -d postgres
+  ```
+
+## Installation
+
+<Steps>
+    <Step>
+    ### Config file
+    Create the app configuration file.
+
+    ```yaml title="~/.config/stardust/config.yaml"
+    port: 3000
+    databaseUrl: "postgresql://postgres:example@localhost/postgres"
+    nodes:
+      - hostname: localhost
+        id: default
+        port: 4000
+        # Should be in the `stardustd` configuration file.
+        token: idkbruh
+    auth:
+      # Anything random, `openssl rand -hex 32` for example.
+      secret: idkbruh
+      credentials:
+        enabled: true
+        signups: true
+    # yaml-language-server: $schema=/opt/stardust/packages/config/schema.json
+    ```
+    </Step>
+    <Step>
+    ### Configure
+
+    <WebTypes />
+
+  <Step>
+  ### Setup the database
+
+```bash
+pnpm --dir packages/db run drizzle-kit push
+```
+
+  </Step>
+  <Step>
+  ### Setup Workspaces
+
+```bash
+pnpm --dir packages/db run seed
+pnpm --dir workspaces run build # builds docker images
+```
+
+  </Step>
+  <Step>
+  ### Build
+  Build the Stardust app.
+
+```bash
+cd apps/web
+pnpm build
+```
+
+  </Step>
+  </Step>
+    <Step>
+    ### Start
+
+    ```bash
+    pnpm start
+    ```
+    An example systemd service file is provided below:
+
+    ```ini title="/etc/systemd/system/stardust.service"
+    [Unit]
+    Description=Stardust SystemD service
+    After=docker.service # add `postgresql.service` if using a local database
+    [Service]
+    # Where GitHub repository is cloned
+    WorkingDirectory=/opt/stardust/apps/web
+    DynamicUser=yes
+    NoNewPrivileges=yes
+    # if using docker container
+    ExecStartPre=docker start stardust-postgres
+    # might be different, run `which pnpm`
+    ExecStart=/usr/bin/pnpm start
+    Restart=on-failure
+    RestartSec=5
+    User=ubuntu
+    [Install]
+    WantedBy=multi-user.target
+    ```
+
+</Step>
+</Steps>

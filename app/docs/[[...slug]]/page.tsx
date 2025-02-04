@@ -1,8 +1,10 @@
 import { getPage, getPages } from "@/app/source";
+import { createTypeTable } from "fumadocs-typescript/ui";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import { Step, Steps } from "fumadocs-ui/components/steps";
+import { Tab, Tabs } from "fumadocs-ui/components/tabs";
 import { DocsBody, DocsPage } from "fumadocs-ui/page";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -36,10 +38,13 @@ export default async function Page(props: {
 				<h1>{page.data.title}</h1>
 				<MDX
 					components={{
+						AutoTypeTable: createTypeTable().AutoTypeTable,
 						Card: (props) => <Card {...props} />,
 						Cards: (props) => <Cards {...props} />,
 						Step: (props) => <Step {...props} />,
 						Steps: (props) => <Steps {...props} />,
+						Tab: (props) => <Tab {...props} />,
+						Tabs: (props) => <Tabs {...props} />,
 						img: (props) => <ImageZoom {...props} />,
 						pre: ({ ref: _ref, ...props }) => (
 							<CodeBlock {...props}>
