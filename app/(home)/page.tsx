@@ -6,9 +6,9 @@ import { ScreenshotComposite } from "./components";
 export default function HomePage() {
 	return (
 		<main className="h-full">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-				<div className="space-y-8 flex flex-col lg:flex-row gap-8">
-					<div className="flex flex-col gap-4">
+			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+				<div className="flex flex-col lg:flex-row gap-8 justify-center lg:justify-between">
+					<div className="flex flex-col gap-4 w-full lg:w-1/2">
 						<h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
 							Stream containers
 							<br />
@@ -27,7 +27,7 @@ export default function HomePage() {
 							</Link>
 						</div>
 					</div>
-					<div className="relative size-full">
+					<div className="relative w-full lg:w-1/2 mt-8 lg:mt-0">
 						<ScreenshotComposite />
 					</div>
 				</div>

@@ -19,12 +19,12 @@ export function ScreenshotComposite() {
 			<Image
 				src={home}
 				alt="Stardust workspaces dashboard screenshot"
-				className="border border-fd-primary/60 duration-300 hover:border-fd-primary rounded-md object-scale-down"
+				className="border border-fd-primary/60 duration-300 hover:border-fd-primary rounded-md object-scale-down scale-80"
 			/>
 			<Image
 				src={view}
 				alt="Stardust session screenshot"
-				className="border border-fd-primary/60 duration-300 hover:border-fd-primary rounded-md absolute top-20 left-20 object-scale-down"
+				className="border border-fd-primary/60 duration-300 hover:border-fd-primary rounded-md absolute top-20 left-20 object-scale-down scale-80"
 			/>
 		</>
 	);
