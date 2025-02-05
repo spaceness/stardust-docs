@@ -2,6 +2,7 @@ import { getPage, getPages } from "@/app/source";
 import { createTypeTable } from "fumadocs-typescript/ui";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { CodeBlock, Pre } from "fumadocs-ui/components/codeblock";
+import { Heading } from "fumadocs-ui/components/heading";
 import { ImageZoom } from "fumadocs-ui/components/image-zoom";
 import { Step, Steps } from "fumadocs-ui/components/steps";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
@@ -39,6 +40,12 @@ export default async function Page(props: {
 				<MDX
 					components={{
 						AutoTypeTable: createTypeTable().AutoTypeTable,
+						h1: (props) => <Heading as="h1" {...props} />,
+						h2: (props) => <Heading as="h2" {...props} />,
+						h3: (props) => <Heading as="h3" {...props} />,
+						h4: (props) => <Heading as="h4" {...props} />,
+						h5: (props) => <Heading as="h5" {...props} />,
+						h6: (props) => <Heading as="h6" {...props} />,
 						Card: (props) => <Card {...props} />,
 						Cards: (props) => <Cards {...props} />,
 						Step: (props) => <Step {...props} />,
