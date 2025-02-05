@@ -1,0 +1,23 @@
+---
+title: For Developers
+description: Learn how to develop Stardust.
+---
+
+Stardust is a fully open source project, and we welcome contributions from the community.
+Feel free to open an issue or pull request on our [GitHub repository](https://github.com/spaceness/stardust).
+
+## Stack
+
+- Next.js 15 - Web
+- ElysiaJS - Daemon
+- PostgreSQL - Database
+- Docker - Containerization
+
+## Structure
+
+Stardust is split into 2 main components:
+
+- Web: The Stardust UI and backend server. This is the main interface for interacting with Stardust.
+- Daemon (`stardustd`): Runs on each individual Stardust node. It is responsible for managing the sessions and workspaces.
+
+Stardust Web sends HTTP requests to the Daemon, which then interacts with Docker to create and manage the workspaces. The daemon api schema can be accessed at `http://<daemon-host>/swagger`, or going to `http://<app-host>/daemon-api/<node-id>` on a Stardust Web instance with the node added. This will require admin access.

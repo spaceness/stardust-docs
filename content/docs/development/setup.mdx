@@ -1,0 +1,92 @@
+---
+title: Setup
+description: Learn how to setup your development environment for Stardust.
+---
+
+## Prerequisites
+
+- [Node.js](https://nodejs.org/en/download) and [pnpm](https://pnpm.io/installation) installed on your machine.
+- [Bun](https://bun.sh/docs/installation) installed on your machine.
+- [Docker](https://docs.docker.com/get-docker/) installed on your machine.
+- A working PostgreSQL database - you can use docker to set one up by running:
+  ```bash
+  docker run --name stardust-postgres -p 5432:5432 -e POSTGRES_PASSWORD=stardustdev -d postgres
+  ```
+
+## Setup
+
+<Steps>
+  <Step>
+    ### Clone the repository
+
+    Clone the Stardust repository and install the
+    dependencies.
+
+    ```bash
+    git clone https://github.com/spaceness/stardust -b rewrite && cd stardust
+    pnpm install
+    ```
+
+  </Step>
+  <Step>
+    ### Init config files
+
+    Create the app and daemon configuration files.
+
+    ```yaml title="<repo>/apps/web/config.yaml"
+    databaseUrl: "postgresql://postgres:example@localhost/postgres"
+    nodes:
+      - hostname: localhost
+        id: default
+        port: 4000
+        token: idkbruh
+    auth:
+      secret: idkbruh
+      credentials:
+        enabled: true
+        signups: true
+    # yaml-language-server: $schema=../../packages/config/schema.json
+    ```
+    ```yaml title="<repo>/apps/daemon/config.yaml"
+    docker:
+      network: stardust
+      socket: /var/run/docker.sock
+      token: idkbruh
+      session: {}
+      # yaml-language-server: $schema=./schema.json
+      ```
+
+You might need to symlink the web config file to `~/.config/stardust.yaml` due to a issue with some scripts. This will be fixed in the future.
+
+```
+ln -s $(pwd)/apps/web/config.yaml ~/.config/stardust.yaml
+```
+
+  </Step>
+  <Step>
+    ### Setup the database
+
+    ```bash
+    pnpm --dir packages/db run drizzle-kit push
+    ```
+
+  </Step>
+  <Step>
+    ### Setup Workspaces
+
+    ```bash
+    pnpm --dir packages/db run seed
+    pnpm --dir workspaces run build
+    ```
+    </Step>
+    <Step>
+    ### Dev Server
+
+    Start the development server. This runs the web server and the daemon in development mode.
+
+    ```bash
+    pnpm dev
+    ```
+
+  </Step>
+</Steps>

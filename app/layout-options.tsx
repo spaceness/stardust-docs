@@ -1,6 +1,5 @@
 import { Discord, StardustIcon } from "@/components/icons";
 import type { DocsLayoutProps } from "fumadocs-ui/layouts/docs";
-import { Sparkles } from "lucide-react";
 import { pageTree } from "./source";
 export const layoutOptions: Omit<DocsLayoutProps, "children"> = {
 	tree: pageTree,

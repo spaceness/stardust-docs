@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 	metadataBase:
 		process.env.NODE_ENV === "development"
 			? new URL(process.env.LOCAL_URL ?? "http://localhost:3000")
-			: new URL("https://stardust.spaceness.one"),
+			: new URL("https://stardust.spaceness.team"),
 };
 export default function Layout({ children }: { children: ReactNode }) {
 	return (
