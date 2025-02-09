@@ -1,0 +1,30 @@
+---
+title: Workspaces
+description: Workspaces is one of the core parts of Stardust. It is the base of a session.
+---
+
+Stardust Workspaces are the base of a session. They are Docker images with a base OS, such as Debian installed, with a VNC server, PulseAudio TCP server, and a lightweight file server.
+
+# Structure
+The container has a user named `stardust` with no set password. These folders exist:
+- `/home/stardust` - The home directory of the `stardust` user.
+- `/home/stardust/Downloads` - The downloads of the `stardust` user.
+- `/home/stardust/Uploads` - The uploads of the `stardust` user.
+## VNC Server
+The VNC server is used to display the desktop of the workspace. Stardust's stock images use TigerVNC, as it has the best support for noVNC, which is used in Stardust.
+
+It runs on port `5901`.
+
+## PulseAudio TCP Server
+The PulseAudio TCP server is used to stream audio from the workspace to the client. It is using a modified C server from [here](https://coredump.ws/index.php?dir=code&post=NoVNC_with_audio).
+
+Source code: [spaceness/stardust#main/workspaces/scripts/tcpulse.c](https://github.com/spaceness/stardust/blob/rewrite/workspaces/scripts/tcpulse.c)
+
+It runs on port `4713`.
+
+## File Server
+The file server is used to transfer files between the workspace and the client. It is a lightweight NodeJS server.
+
+Source code: [spaceness/stardust#main/workspaces/scripts/files.mjs](https://github.com/spaceness/stardust/blob/rewrite/workspaces/scripts/files.mjs)
+
+It runs on port `6080`.
