@@ -17,18 +17,31 @@ To build the project, run `pnpm build` within the `workspaces` directory!
 
 (No way to build a project, you run a build script??? 🤯)
 
-### CLI flags
+### Flags
 
-- `--images`
-    - Specify the images to be built in a comma separated list with no spaces.
-    - e.g. `--images chromium,firefox`
-- `--multi-platform`
-    - Builds the workspaces for both ARM and 64-bit CPUs.
-- `--push`
-    - Pushes the image to the Docker registry. This only exists for our GitHub workflow and serves no purpose to external developers unless the build script is modified.
-- `--quiet`
-    - Suppresses Docker build logs within the console.
-| Column 1      | Column 2      |
-| ------------- | ------------- |
-| Cell 1, Row 1 | Cell 2, Row 1 |
-| Cell 1, Row 2 | Cell 1, Row 2 |
+<table>
+  <thead>
+    <tr>
+      <th>Flag</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--images</code></td>
+      <td>Specify the images to be built in a comma-separated list with no spaces. <br/>For example: <code>--images chromium,firefox</code>.</td>
+    </tr>
+    <tr>
+      <td><code>--multi-platform</code></td>
+      <td>Builds the workspaces for both ARM and 64-bit CPUs.</td>
+    </tr>
+    <tr>
+      <td><code>--push</code></td>
+      <td>Pushes the image to the Docker registry.<br/><small>This option is specific to the GitHub workflow and serves no purpose for external developers unless the build script is modified.</small></td>
+    </tr>
+    <tr>
+      <td><code>--quiet</code></td>
+      <td>Suppresses Docker build logs within the console.</td>
+    </tr>
+  </tbody>
+</table>
