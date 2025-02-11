@@ -1,0 +1,28 @@
+---
+title: Build
+description: Build instructions for workspaces.
+---
+
+## Obtaining the latest release
+
+Head to the [GitHub releases](https://github.com/spaceness/stardust) and download the latest source code archive in the format of your choice implying you can extract it, [7-Zip](https://7-zip.org) is a good utility for this.
+
+## Enter the workspaces folder
+
+As of the current release, just `cd` into `workspaces` if your current working directory is Stardust's extracted source code, if not first `cd` into Stardust.
+
+## Run the build script
+
+To build the project, run `pnpm build` within the `workspaces` directory! (No way to build a project, you run a build script??? 🤯)
+
+### CLI flags
+
+- `--images`
+    - Specify the images to be built in a comma separated list with no spaces.
+    - e.g. `--images chromium,firefox`
+- `--multi-platform`
+    - Builds the workspaces for both ARM and 64-bit CPUs.
+- `--push`
+    - Pushes the image to the Docker registry. This only exists for our GitHub workflow and serves no purpose to external developers unless the build script is modified.
+- `--quiet`
+    - Suppresses Docker build logs within the console.
