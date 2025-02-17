@@ -33,7 +33,7 @@ description: Learn how to setup your development environment for Stardust.
 
     Create the app and daemon configuration files.
 
-    ```yaml title="<repo>/apps/web/config.yaml"
+    ```yaml title="<repo>/app-config.yaml"
     databaseUrl: "postgresql://postgres:example@localhost/postgres"
     nodes:
       - hostname: localhost
@@ -47,7 +47,7 @@ description: Learn how to setup your development environment for Stardust.
         signups: true
     # yaml-language-server: $schema=../../packages/config/schema.json
     ```
-    ```yaml title="<repo>/apps/daemon/config.yaml"
+    ```yaml title="<repo>/daemon-config.yaml"
     docker:
       network: stardust
       socket: /var/run/docker.sock
@@ -55,12 +55,6 @@ description: Learn how to setup your development environment for Stardust.
       session: {}
       # yaml-language-server: $schema=./schema.json
       ```
-
-You might need to symlink the web config file to `~/.config/stardust.yaml` due to a issue with some scripts. This will be fixed in the future.
-
-```
-ln -s $(pwd)/apps/web/config.yaml ~/.config/stardust.yaml
-```
 
   </Step>
   <Step>
